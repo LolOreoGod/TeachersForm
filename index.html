@@ -35,12 +35,12 @@
         <div id="questions">
 
 
-            <div class="question-box" v-for="(questions) in questionsBoxes">
+            <div class="question-box" v-for="questions in questionBoxes">
 
 
                 <input type="text" class="form-control" placeholder="Enter Question Here"
                        v-model="questions.question">
-
+                <button class="adding_button" @click="addNewForm">+</button>
                 <div id="answer"></div>
 
             </div>
@@ -59,21 +59,27 @@
     <div class="x-button">
         <a href="dashboard.html">X</a>
         <div id="due_date"></div>
-        <div class="adding_button">+</div>
     </div>
 </div>
 
 <script>
 var app = new Vue({
 
-    el: '.question-box',
+    el: '#form',
     data: {
-        questionsBoxes: [
-    {
-        question: "",
-    }
+        questionBoxes: [
+            {
+            question: "",
+             }
         ]
 
+    },
+    methods: {
+        addNewForm () {
+            this.questionBoxes.push({
+                question: "",
+            })
+        }
     }
 
 })
