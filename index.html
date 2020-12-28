@@ -1,95 +1,158 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <title>CODE4REAL</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.4/vue.cjs.js" integrity="sha512-tbfpVZegVjOUS9H3X526XZJxi/dPnhiGRM8Z83AY8kbFBrZLuug/mU57PJJsdXn38dlXjrUxtaEOl11Y1uoaRQ==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.4/vue.cjs.js"
+      integrity="sha512-tbfpVZegVjOUS9H3X526XZJxi/dPnhiGRM8Z83AY8kbFBrZLuug/mU57PJJsdXn38dlXjrUxtaEOl11Y1uoaRQ=="
+      crossorigin="anonymous"
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vuex"></script>
-</head>
+  </head>
 
-<body>
-<div class="navigator">
-    <div class="left-side">
+  <body>
+    <div class="navigator">
+      <div class="left-side">
         <a href="dashboard.html">Return to Dashboard</a>
-    </div>
-    <div class="right-side">
+      </div>
+      <div class="right-side">
         <div class="dropdown">
-            <button class="drop-button">Your Name
-            </button>
-            <div class="button">
-                <a href="Setting.html">Settings</a>
-                <a href="Help.html">Help</a>
-                <a>Log Out</a>
-            </div>
+          <button class="drop-button">Your Name</button>
+          <div class="button">
+            <a href="Setting.html">Settings</a>
+            <a href="Help.html">Help</a>
+            <a>Log Out</a>
+          </div>
         </div>
+      </div>
     </div>
-</div>
 
-<div id="form">
-    <div id="title">
-        <div id="description"></div>
-        <div id="questions">
-
-
-            <div class="question-box" :key="index" v-for="(questions, index) in questionBoxes">
-
-
-                <input type="text" class="form-control" placeholder="Enter Question Here"
-                       v-model="questions.question">
-                <button class="adding_button" @click="addNewQuestion">+</button>
-                <div id="answer"></div>
-                <div class="question-box choices"></div>
-                <div class="required"></div>
-                <div class="trash_can">
-                    <div class="trash_symbol" @click="deleteQuestion(index)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                        </svg>
-                    </div>
+    <div id="form" style="height: 450px">
+      <div class="x-button">
+          <a href="dashboard.html">X</a>
+          <div id="due_date">Due Date</div>
+      </div>
+      <div id="title"> Title
+      <div id="description"> Description </div>
+      <button
+        id="adding_button"
+        class="adding_button"
+        style="top: 200px"
+        @click="addNewQuestion"
+      >
+        +
+      </button>
+      <div id="questions" :key="index" v-for="(questions, index) in questionBoxes">
+        <div class="question-box" >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Question Here"
+                v-model="questions.question"
+              />
+              <div id="answer">
+                <textarea class="form-control" placeholder="Enter your answer here" rows="10" cols="70"></textarea>
+              </div>
+              <div class="question-box choices"></div>
+              <div class="required"></div>
+              <div class="trash_can">
+                <div class="trash_symbol" @click="deleteQuestion(index)">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-trash"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                    />
+                  </svg>
                 </div>
+              </div>
             </div>
-
-
-
         </div>
+      </div>
+      </div>
     </div>
-    <div class="x-button">
-        <a href="dashboard.html">X</a>
-        <div id="due_date"></div>
-    </div>
-</div>
 
-<script>
-var app = new Vue({
-
-    el: '#form',
-    data: {
-        questionBoxes: [
+    <script>
+      var addButtonMovement = 180;
+      var formExtensionMovement = 200
+      var app = new Vue({
+        el: "#form",
+        data: {
+          questionBoxes: [
             {
-            question: "",
-             }
-        ]
-
-    },
-    methods: {
-        addNewQuestion () {
-            this.questionBoxes.push({
-                question: "",
-            })
+              question: ""
+            }
+          ]
         },
+        methods: {
+          addNewQuestion() {
+            this.questionBoxes.push({
+              question: ""
+            });
 
-        deleteQuestion () {
-            this.questionBoxes.splice(index, 1)
+            // extend form size by 200 px
+            document.getElementById("form").style.height =
+                parseInt(
+                  document
+                    .getElementById("form")
+                    .style.height.replace(/px/, "")
+                ) +
+                formExtensionMovement +
+                "px";
+
+              // move add button 160 px down
+              document.getElementById("adding_button").style.top =
+                parseInt(
+                  document
+                    .getElementById("adding_button")
+                    .style.top.replace(/px/, "")
+                ) +
+                addButtonMovement +
+                "px";
+          },
+
+          deleteQuestion(index) {
+            this.questionBoxes.splice(index, 1);
+
+            // lessen form size by 170 px
+            document.getElementById("form").style.height =
+                parseInt(
+                  document
+                    .getElementById("form")
+                    .style.height.replace(/px/, "")
+                ) -
+                formExtensionMovement +
+                "px";
+
+              // move add button 160 px up
+              document.getElementById("adding_button").style.top =
+                parseInt(
+                  document
+                    .getElementById("adding_button")
+                    .style.top.replace(/px/, "")
+                ) -
+                addButtonMovement +
+                "px";
+          }
         }
-    }
-
-})
-</script>
-</body>
-
+      });
+    </script>
+  </body>
 </html>
