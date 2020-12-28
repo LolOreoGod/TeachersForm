@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>CODE4REAL</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.4/vue.cjs.js" integrity="sha512-tbfpVZegVjOUS9H3X526XZJxi/dPnhiGRM8Z83AY8kbFBrZLuug/mU57PJJsdXn38dlXjrUxtaEOl11Y1uoaRQ==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuex"></script>
+</head>
+
+<body>
+<div class="navigator">
+    <div class="left-side">
+        <a href="dashboard.html">Return to Dashboard</a>
+    </div>
+    <div class="right-side">
+        <div class="dropdown">
+            <button class="drop-button">Your Name
+            </button>
+            <div class="button">
+                <a href="Setting.html">Settings</a>
+                <a href="Help.html">Help</a>
+                <a>Log Out</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="form">
+    <div id="title">
+        <div id="description"></div>
+        <div id="questions">
+
+
+            <div class="question-box" v-for="(questions) in questionsBoxes">
+
+
+                <input type="text" class="form-control" placeholder="Enter Question Here"
+                       v-model="questions.question">
+
+                <div id="answer"></div>
+
+            </div>
+            <div class="question-box choices"></div>
+            <div class="required"></div>
+            <div class="trash_can">
+                <div class="trash_symbol">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="x-button">
+        <a href="dashboard.html">X</a>
+        <div id="due_date"></div>
+        <div class="adding_button">+</div>
+    </div>
+</div>
+
+<script>
+var app = new Vue({
+
+    el: '.question-box',
+    data: {
+        questionsBoxes: [
+    {
+        question: "",
+    }
+        ]
+
+    }
+
+})
+</script>
+</body>
+
+</html>
