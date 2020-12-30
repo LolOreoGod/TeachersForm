@@ -59,6 +59,7 @@ body {
 .navigator .right-side a:hover,
 .dropdown:hover .drop-button {
   background-color: #564154ff;
+  width: 100%;
 }
 
 /*Add a purple background color to nav bar links on hover (left) */
@@ -94,7 +95,7 @@ body {
 /* box for form */
 #form {
   width: 850px;
-  height: 450px;
+  height: auto;
   background-color: #e1caabff;
   display: flex;
   margin-left: auto;
@@ -115,6 +116,16 @@ body {
   border: 1px solid black;
 }
 
+/* Text box for title */
+.title-text {
+  width: 100%;
+  border: none;
+  box-sizing: border-box;
+  border-radius: 4px;
+  height: 100%;
+  font-size: 100%;
+}
+
 /* box for description */
 #description {
   width: 600px;
@@ -124,6 +135,16 @@ body {
   margin-right: auto;
   margin-top: 10%;
   border: 1px solid black;
+}
+
+/* Text box for descrption */
+.desc-text {
+  width: 100%;
+  border: none;
+  box-sizing: border-box;
+  border-radius: 4px;
+  height: 100%;
+  font-size: 100%;
 }
 
 /* box for x-button */
@@ -164,7 +185,7 @@ body {
   background-color: #eeeeeeff;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 6%;
+  margin-top: 12%;
   border: 1px solid black;
 }
 
@@ -198,18 +219,18 @@ body {
   height: 40px;
   background-color: #ede1d1ff;
   float: right;
-  margin-top: -33%;
-  margin-right: -23%;
+  margin-top: 1%;
+  margin-right: 1%;
   border: 1px solid black;
 }
 
-/* box for answer */
+/* box for short answer */
 #answer {
   width: 475px;
-  height: 95px;
+  height: auto;
   background-color: rgb(255, 255, 255);
-  margin-top: 3%;
-  margin-left: 0.1%;
+  margin-top: 1.5%;
+  margin-left: 1%;
   margin-bottom: 1%;
   border: 1px solid black;
 }
@@ -221,9 +242,8 @@ body {
   background-color: #eeeeeeff;
   border: 1px solid black;
   float: right;
-  margin-top: -6.5%;
-  margin-bottom: 1%;
-  margin-right: -24%;
+  margin-right: 7px;
+  top: 100px;
 }
 
 /* Add a purple background color to required button on hover */
@@ -238,10 +258,8 @@ body {
   background-color: #b7b7b7ff;
   border: 1px solid black;
   float: right;
-  margin-top: -6.5%;
-  margin-bottom: 1%;
-  margin-right: -18%;
   text-align: center;
+  left: 100px;
 }
 
 /* centering trash can icon */
@@ -264,7 +282,7 @@ body {
   display: inline-block;
   position: relative;
   right: 60px;
-  top: 200px;
+  bottom: 50px;
   border: 1px solid black;
   display: flex;
   /* or inline-flex */

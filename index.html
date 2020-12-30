@@ -1,3 +1,4 @@
+<!--some elements have overriding styles in body for js to dynamically adjust question boxes when adding/deleting questions-->
 <!DOCTYPE html>
 <html>
   <head>
@@ -13,6 +14,7 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.4/vue.cjs.js"
       integrity="sha512-tbfpVZegVjOUS9H3X526XZJxi/dPnhiGRM8Z83AY8kbFBrZLuug/mU57PJJsdXn38dlXjrUxtaEOl11Y1uoaRQ=="
       crossorigin="anonymous"
+      index="0"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vuex"></script>
@@ -27,7 +29,7 @@
         <div class="dropdown">
           <button class="drop-button">Your Name</button>
           <div class="button">
-            <a href="Setting.html">Settings</a>
+            <a href="Settings.html">Settings</a>
             <a href="Help.html">Help</a>
             <a>Log Out</a>
           </div>
@@ -35,124 +37,278 @@
       </div>
     </div>
 
-    <div id="form" style="height: 450px">
+    <div id="form" style="height: 1000px;">
       <div class="x-button">
-          <a href="dashboard.html">X</a>
-          <div id="due_date">Due Date</div>
+        <a href="dashboard.html">X</a>
+        <div id="due_date">Due Date</div>
       </div>
-      <div id="title"> Title
-      <div id="description"> Description </div>
-      <button
-        id="adding_button"
-        class="adding_button"
-        style="top: 200px"
-        @click="addNewQuestion"
-      >
-        +
-      </button>
-      <div id="questions" :key="index" v-for="(questions, index) in questionBoxes">
-        <div class="question-box" >
+      <div id="title">
+        <input
+          type="text"
+          class="title-text"
+          placeholder="Enter Title Here"
+          v-model="title"
+        />
+        <div id="description">
+          <input
+            type="text"
+            class="desc-text"
+            placeholder="Form Description"
+            v-model="desc"
+          />
+        </div>
+        <div id="description">Description</div>
+        <div
+          id="questions"
+          bind:key="{index}"
+          style="height: auto;"
+          v-for="(questions, index) in questionBoxes"
+        >
+          <!--question-->
+          <div class="question-box">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter Question Here"
+              v-model="questions.question"
+            />
+          </div>
+
+          <!--div answer will vary based on question type "-->
+          <div
+            class="question-box choices"
+            style="-webkit-text-fill-color: #779fa1;"
+          >
+            <select
+              id="choose-question-type"
+              class="form-control"
+              v-model="questions.type"
+              value="questions.index.type"
+              style="font-size: 10px;"
+            >
+              <option> short answer </option>
+              <option> multiple choice </option>
+              <option> checkbox </option>
+            </select>
+          </div>
+
+          <div class="required"></div>
+          <div class="trash_can">
+            <div class="trash_symbol" @click="deleteQuestion(index)">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-trash"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
+                />
+                <path
+                  fill-rule="evenodd"
+                  d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                />
+              </svg>
+            </div>
+          </div>
+
+          <!--short answer text area-->
+          <div id="answer" v-if="questionBoxes[index].type == 'short answer'">
+            <div
+              id="shortAnswer"
+              class="form-control"
+              style="height: 95px;"
+              :key="saindex"
+              v-for="(shortAnswer, saindex) in questionBoxes[index].shortAnswers"
+            >
+              <textarea
+                id="short-answer-textarea"
+                class="form-control"
+                placeholder="Enter your answer here"
+                rows="10"
+                cols="70"
+                v-model="shortAnswer.answer"
+              ></textarea>
+            </div>
+          </div>
+
+          <!--multiple choice answer-->
+          <div
+            id="answer"
+            v-else-if="questionBoxes[index].type == 'multiple choice'"
+          >
+            <button
+              id="adding_mc_button"
+              class="adding_mc_button"
+              style="float: right; margin-top: 2px; margin-right: 2px;"
+              @click="addNewMultipleChoiceOption(index)"
+            >
+              +
+            </button>
+            <div
+              id="mcquestions"
+              name="mcquestions"
+              style="margin-top: 2px;"
+              :key="mcindex"
+              v-for="(mcquestions, mcindex) in questionBoxes[index].multipleChoiceOptions"
+            >
+              <button
+                id="deleting_mc_button"
+                class="deleting_mc_button"
+                @click="deleteMultipleChoiceOption(index, mcindex)"
+              >
+                -
+              </button>
+              <input
+                type="radio"
+                id="radioOption"
+                name="radioOption"
+                value=""
+                style="float: left;"
+              />
               <input
                 type="text"
-                class="form-control"
-                placeholder="Enter Question Here"
-                v-model="questions.question"
-              />
-              <div id="answer">
-                <textarea class="form-control" placeholder="Enter your answer here" rows="10" cols="70"></textarea>
-              </div>
-              <div class="question-box choices"></div>
-              <div class="required"></div>
-              <div class="trash_can">
-                <div class="trash_symbol" @click="deleteQuestion(index)">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-trash"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
-                    />
-                    <path
-                      fill-rule="evenodd"
-                      d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                    />
-                  </svg>
-                </div>
-              </div>
+                id="radioOptionText"
+                name="radioOptionText"
+                style="float: left;"
+                placeholder="option"
+                v-model="mcquestions.moption"
+              /><br />
             </div>
+          </div>
+
+          <!--checkbox answer-->
+          <div id="answer" v-else-if="questionBoxes[index].type == 'checkbox'">
+            <button
+              id="adding_cb_button"
+              class="adding_cb_button"
+              style="float: right; margin-top: 2px; margin-right: 2px;"
+              @click="addNewCheckboxOption(index)"
+            >
+              +
+            </button>
+            <div
+              id="mcquestions"
+              name="mcquestions"
+              style="margin-top: 2px;"
+              :key="mcindex"
+              v-for="(mcquestions, mcindex) in questionBoxes[index].checkboxOptions"
+            >
+              <button
+                id="deleting_mc_button"
+                class="deleting_mc_button"
+                @click="deleteCheckboxOption(index, mcindex)"
+              >
+                -
+              </button>
+              <input
+                type="checkbox"
+                id="radioOption"
+                name="radioOption"
+                value=""
+                style="float: left;"
+              />
+              <input
+                type="text"
+                id="radioOptionText"
+                name="radioOptionText"
+                style="float: left;"
+                placeholder="option"
+                v-model="mcquestions.coption"
+              /><br />
+            </div>
+          </div>
         </div>
-      </div>
+        <button
+          id="adding_button"
+          class="adding_button"
+          @click="addNewQuestion"
+        >
+          +
+        </button>
       </div>
     </div>
 
     <script>
-      var addButtonMovement = 180;
-      var formExtensionMovement = 200
       var app = new Vue({
         el: "#form",
         data: {
+          title: "",
+          desc: "",
           questionBoxes: [
             {
-              question: ""
+              question: "",
+              title: "",
+              type: "short answer",
+              // short Answer is default question
+              shortAnswers: [
+                {
+                  answer: ""
+                }
+              ],
+              multipleChoiceOptions: [
+                {
+                  moption: ""
+                }
+              ],
+              checkboxOptions: [
+                {
+                  coption: ""
+                }
+              ]
             }
           ]
         },
         methods: {
           addNewQuestion() {
             this.questionBoxes.push({
-              question: ""
+              question: "",
+              type: "short answer",
+              shortAnswers: [
+                {
+                  answer: ""
+                }
+              ],
+              multipleChoiceOptions: [
+                {
+                  moption: ""
+                }
+              ],
+              checkboxOptions: [
+                {
+                  coption: ""
+                }
+              ]
             });
-
-            // extend form size by 200 px
-            document.getElementById("form").style.height =
-                parseInt(
-                  document
-                    .getElementById("form")
-                    .style.height.replace(/px/, "")
-                ) +
-                formExtensionMovement +
-                "px";
-
-              // move add button 160 px down
-              document.getElementById("adding_button").style.top =
-                parseInt(
-                  document
-                    .getElementById("adding_button")
-                    .style.top.replace(/px/, "")
-                ) +
-                addButtonMovement +
-                "px";
           },
 
           deleteQuestion(index) {
             this.questionBoxes.splice(index, 1);
+          },
 
-            // lessen form size by 170 px
-            document.getElementById("form").style.height =
-                parseInt(
-                  document
-                    .getElementById("form")
-                    .style.height.replace(/px/, "")
-                ) -
-                formExtensionMovement +
-                "px";
+          addNewMultipleChoiceOption(index) {
+            this.questionBoxes[index].multipleChoiceOptions.push({
+              moption: ""
+            });
+          },
 
-              // move add button 160 px up
-              document.getElementById("adding_button").style.top =
-                parseInt(
-                  document
-                    .getElementById("adding_button")
-                    .style.top.replace(/px/, "")
-                ) -
-                addButtonMovement +
-                "px";
+          deleteMultipleChoiceOption(index, mcindex) {
+            this.questionBoxes[index].multipleChoiceOptions.splice(mcindex, 1);
+          },
+
+          addNewCheckboxOption(index) {
+            this.questionBoxes[index].checkboxOptions.push({
+              coption: ""
+            });
+          },
+
+          deleteCheckboxOption(index, mcindex) {
+            this.questionBoxes[index].checkboxOptions.splice(mcindex, 1);
           }
-        }
-      });
+        } // methods end
+      }); // app end
     </script>
   </body>
 </html>
