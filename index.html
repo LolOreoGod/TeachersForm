@@ -40,7 +40,12 @@
     <div id="form">
       <div class="x-button">
         <a href="dashboard.html">X</a>
-        <div id="due_date">Due Date</div>
+
+        <div id="due_date"> 
+            Due Date 
+            <br><input type="datetime-local" v-model="dueDate" value="dueDate" style="margin-top: 2px; margin-bottom: 2px;"></input>
+        </div>
+        
       </div>
       <div id="title">
         <input
@@ -322,12 +327,19 @@
     </div> <!--title box end-->
     </div> <!--END: form-->
 
+      
     <script>
+      function getISOStringWithoutSecsAndMillisecs2(date) {
+  const dStr = date.toISOString()
+  
+  return dStr.substring(0, dStr.indexOf(':', dStr.indexOf(':')+1))
+}
       var app = new Vue({
         el: "#form",
         data: {
           title: "",
           desc: "",
+          dueDate: getISOStringWithoutSecsAndMillisecs2(new Date()),
           choiceBoxes: [{
             label: "",
             choiceQuestions: [{
