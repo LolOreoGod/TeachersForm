@@ -1,6 +1,6 @@
 /* background color */
 body {
-  background-color: #f5f7e9ff;
+  background-color: white;
 }
 
 /* Navbar container */
@@ -94,8 +94,16 @@ body {
 
 /* box for form */
 #form {
+  width: 600px;
+  height: 40px;
+  background-color: #e1caabff;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2%;
+  border: 1px solid black;
+  /*
   width: 850px;
-  height: 2000px;
+  height: auto;
   background-color: #e1caabff;
   display: flex;
   margin-left: auto;
@@ -103,6 +111,7 @@ body {
   margin-top: 1%;
   margin-bottom: 1%;
   border: 1px solid black;
+  */
 }
 
 /* box for title */
@@ -171,8 +180,8 @@ body {
   height: auto;
   background-color: #779fa1ff;
   float: right;
-  margin-right: -3580%;
-  margin-top: 830%;
+  margin-right: -60px;
+  margin-top: 175px;
   margin-bottom: 5%;
   border: 1px solid black;
 }
@@ -181,6 +190,8 @@ body {
 #questions {
   width: 600px;
   height: auto;
+  isolation: 3px;
+  box-shadow: 2px 2px 2px grey;
   background-color: #eeeeeeff;
   margin-left: auto;
   margin-right: auto;
@@ -194,7 +205,8 @@ body {
   background-color: #eeeeeeff;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 12%;
+  margin-top: 15%;
+  margin-bottom: 2%;
   border: 1px solid black;
 }
 
@@ -276,7 +288,7 @@ body {
   width: 475px;
   height: auto;
   background-color: rgb(255, 255, 255);
-  margin-top: 1.5%;
+  margin-top: 2%;
   margin-left: 1%;
   margin-bottom: 1%;
   border: 1px solid black;
@@ -346,7 +358,9 @@ body {
   border-radius: 40%;
   display: inline-block;
   position: relative;
-  right: 60px;
+  float: right;
+  left: 100px;
+  right: 0px;
   bottom: 50px;
   border: 1px solid black;
   display: flex;

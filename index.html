@@ -37,7 +37,6 @@
       </div>
     </div>
 
-    <div id="form">
       <div class="x-button">
         <a href="dashboard.html">X</a>
 
@@ -47,13 +46,16 @@
         </div>
         
       </div>
-      <div id="title">
+      <div id="form-container" style="height: auto">
+      <div id="form" style="height: auto">
+        <div id="title">
         <input
           type="text"
           class="title-text"
           placeholder="Enter Title Here"
           v-model="title"
         />
+        </div>
         <div id="description">
           <input
             type="text"
@@ -87,7 +89,6 @@
             id="choose-question-type"
             class="form-control"
             v-model="questions.type"
-            value="questions.index.type"
             style="font-size: 10px;"
           >
             <option> short answer </option>
@@ -98,7 +99,7 @@
         </div>
 
         <!--required box-->
-        <div class="required"></div>
+        <input type="checkbox" v-model="questions.required" class="required"></input>
 
         <!--trash button-->
         <div class="trash_can">
@@ -247,7 +248,6 @@
           </button>
         </div>
       </div> <!--END: question boxes stack-->
-
       <!--button to add more questions-->
       <button
         id="adding_button"
@@ -261,7 +261,6 @@
       <div
         id="topicChoiceBox"
         class="questions"
-        style="margin-top: 25px"
         :key="index"
         v-for="(topicChoiceBox, index) in choiceBoxes"
         >
@@ -324,16 +323,18 @@
             add question
         </button>
       </div> <!--END: topic choice box-->
+    <div style="height:100px"></div>
     </div> <!--title box end-->
+    </div> <!--form-->
     </div> <!--END: form-->
 
       
     <script>
       function getISOStringWithoutSecsAndMillisecs2(date) {
-  const dStr = date.toISOString()
+        const dStr = date.toISOString()
   
-  return dStr.substring(0, dStr.indexOf(':', dStr.indexOf(':')+1))
-}
+        return dStr.substring(0, dStr.indexOf(':', dStr.indexOf(':')+1))
+      }
       var app = new Vue({
         el: "#form",
         data: {
@@ -352,6 +353,7 @@
             {
               question: "",
               title: "",
+              required: false,
               type: "short answer",
               // short Answer is default question
               shortAnswers: [
@@ -382,6 +384,7 @@
             this.questionBoxes.push({
               question: "",
               type: "short answer",
+              required: true,
               shortAnswers: [{
                 answer: ""
               }],
