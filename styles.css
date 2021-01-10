@@ -1,13 +1,13 @@
 /* background color */
 body {
-  background-color: white;
+  background-color: #f5f7e9ff;
+  font-family: Varela Round;
 }
 
 /* Navbar container */
 .navigator {
   overflow: hidden;
   background-color: #779fa1ff;
-  font-family: Varela Round;
 }
 
 /* Links inside the navbar left */
@@ -84,7 +84,7 @@ body {
   padding: 12px 16px;
   text-decoration: none;
   display: block;
-  text-align: left;
+  text-align: center;
 }
 
 /* Show the dropdown menu on hover */
@@ -100,7 +100,8 @@ body {
   margin-left: auto;
   margin-right: auto;
   margin-top: 2%;
-  border: 1px solid black;
+  border: 1px solid #383838;
+  padding: 50px;
   /*
   width: 850px;
   height: auto;
@@ -122,7 +123,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   margin-top: 2%;
-  border: 1px solid black;
+  border: 1px solid #383838;
 }
 
 /* Text box for title */
@@ -143,7 +144,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   margin-top: 10%;
-  border: 1px solid black;
+  border: 1px solid #383838;
 }
 
 /* Text box for descrption */
@@ -180,10 +181,11 @@ body {
   height: auto;
   background-color: #779fa1ff;
   float: right;
-  margin-right: -60px;
+  margin-right: 30px;
   margin-top: 175px;
   margin-bottom: 5%;
-  border: 1px solid black;
+  padding: 5px;
+  border: 1px solid #383838;
 }
 
 /* box for question */
@@ -196,7 +198,8 @@ body {
   margin-left: auto;
   margin-right: auto;
   margin-top: 14%;
-  border: 1px solid black;
+  margin-bottom: 14%;
+  border: 1px solid #383838;
 }
 
 #topicChoiceBox {
@@ -205,9 +208,9 @@ body {
   background-color: #eeeeeeff;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 15%;
+  margin-top: 12%;
   margin-bottom: 2%;
-  border: 1px solid black;
+  border: 1px solid #383838;
 }
 
 /* question and answer in choice question box */
@@ -223,7 +226,7 @@ body {
   margin-right: auto;
   margin-bottom: 10px;
   float: bottom;
-  border: 1px solid black;
+  border: 1px solid #383838;
 }
 
 /*question and answer text inputs in choice question box*/
@@ -234,7 +237,7 @@ body {
   margin-right: auto;
   margin-top: 1%;
   float: center;
-  border: 1px solid black;
+  border: 1px solid #383838;
 }
 
 .topic-choice-textarea {
@@ -257,7 +260,7 @@ body {
   margin-right: auto;
   margin-top: 1%;
   display: inline-block;
-  border: 1px solid black;
+  border: 1px solid #383838;
 }
 
 /* Question input */
@@ -280,7 +283,7 @@ body {
   float: right;
   margin-top: 1%;
   margin-right: 1%;
-  border: 1px solid black;
+  border: 1px solid #383838;
 }
 
 /* box for long answer */
@@ -291,7 +294,7 @@ body {
   margin-top: 2%;
   margin-left: 1%;
   margin-bottom: 1%;
-  border: 1px solid black;
+  border: 1px solid #383838;
 }
 
 /* box for requirement */
@@ -299,7 +302,7 @@ body {
   width: 20px;
   height: 20px;
   background-color: #eeeeeeff;
-  border: 1px solid black;
+  border: 1px solid #383838;
   float: right;
   margin-right: 7px;
   top: 100px;
@@ -315,7 +318,7 @@ body {
   width: 20px;
   height: 20px;
   background-color: #b7b7b7ff;
-  border: 1px solid black;
+  border: 1px solid #383838;
   float: right;
   text-align: center;
   left: 100px;
@@ -359,10 +362,10 @@ body {
   display: inline-block;
   position: relative;
   float: right;
-  left: 100px;
+  left: 150px;
   right: 0px;
   bottom: 50px;
-  border: 1px solid black;
+  border: 1px solid #383838;
   display: flex;
   /* or inline-flex */
   justify-content: center;
