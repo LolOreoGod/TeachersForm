@@ -1,15 +1,12 @@
 <template>
-  <div class="x-button">
-    <a href="dashboard.html">X</a>
+  <!-- <div class="x-button">
+   
+   <a href="dashboard.html">X</a> -->
 
-    <div id="due_date">
-      Due Date
-      <br><input type="datetime-local" v-model="dueDate" style="margin-top: 2px; margin-bottom: 2px;"/>
-    </div>
+ 
 
-  </div>
-  <div id="form-container" style="height: auto">
-    <div id="form" style="height: auto">
+  <div id="form-container">
+    <div id="form">
       <div id="title">
         <input
           type="text"
@@ -18,6 +15,7 @@
           v-model="title"
         />
       </div>
+      <br>
     <div id="description">
       <input
         type="text"
@@ -25,11 +23,15 @@
         placeholder="Form Description"
         v-model="desc"
       />
+    <div id="due_date">
+      Due Date
+      <br><input type="datetime-local" v-model="dueDate" />
     </div>
+    </div>
+    <br>
     <div
           id="questions"
           bind:key="{index}"
-          style="height: auto;"
           v-for="(questions, index) in questionBoxes"
           :key= "questions"
         >
@@ -52,7 +54,6 @@
             id="choose-question-type"
             class="form-control"
             v-model="questions.type"
-            style="font-size: 10px;"
           >
             <option> short answer </option>
             <option> long answer </option>
@@ -110,7 +111,6 @@
           <div
             id="longAnswer"
             class="form-control"
-            style="height: 95px;"
             :key="laindex"
             v-for="(longAnswer, laindex) in questionBoxes[index].longAnswers"
           >
@@ -118,7 +118,6 @@
               id="long-answer-textarea"
               class="form-control"
               placeholder="long answer text"
-              style="font-family: Arial, Helvetica, sans-serif;"
               v-model="longAnswer.answer"
             ></textarea>
           </div>
@@ -133,7 +132,6 @@
             id="mcquestions"
             class="mcquestions"
             name="mcquestions"
-            style="margin-top: 7px;"
             :key="mcindex"
             v-for="(mcquestions, mcindex) in questionBoxes[index].multipleChoiceOptions"
           >
@@ -149,13 +147,11 @@
               id="radioOption"
               name="radioOption"
               value=""
-              style="float: left;"
             />
             <input
               type="text"
               id="radioOptionText"
               name="radioOptionText"
-              style="float: left;"
               placeholder="option"
               v-model="mcquestions.moption"
             /><br />
@@ -175,7 +171,6 @@
             id="mcquestions"
             class="mcquestions"
             name="mcquestions"
-            style="margin-top: 7px;"
             :key="mcindex"
             v-for="(mcquestions, mcindex) in questionBoxes[index].checkboxOptions"
           >
@@ -191,13 +186,11 @@
               id="radioOption"
               name="radioOption"
               value=""
-              style="float: left;"
             />
             <input
               type="text"
               id="radioOptionText"
               name="radioOptionText"
-              style="float: left;"
               placeholder="option"
               v-model="mcquestions.coption"
             /><br />
@@ -213,7 +206,6 @@
     </div> <!--END: question boxes stack-->
       <!--button to add more questions-->
       <button
-        id="adding_button"
         class="adding_button"
         @click="addNewQuestion"
       >
@@ -227,7 +219,7 @@
         :key="index"
         v-for="(topicChoiceBox, index) in choiceBoxes"
         >
-        <p style="margin-left: 10px; margin-top: 10px; margin-bottom: 0px"> Set your choice questions here </p>
+        <p> Set your choice questions here </p>
 
         <!--topic label-->
         <br><input type="text" id="topic-label" class="topic-label" placeholder="Label (e.g. POAS)" v-model="topicChoiceBox.label"/>
@@ -242,7 +234,6 @@
           <button
             id="deleting_mc_button"
             class="deleting_mc_button"
-            style="margin-left: 2px"
             @click="deleteChoiceQuestionSet(index, questionIndex)"
           >
             -
@@ -259,7 +250,6 @@
               class="form-control"
               v-model="choiceQuestions.type"
               value="choiceQuestions.type"
-              style="font-size: 10px;"
             >
               <option> short </option>
               <option> long </option>
@@ -280,13 +270,12 @@
         <button
             id="adding_mc_button"
             class="adding_mc_button"
-            style="background-color: transparent; margin-left: 0.5%; margin-top: 1%; margin-bottom: 1%"
             @click="addNewChoiceQuestionSet(index)"
           >
             add question
         </button>
       </div> <!--END: topic choice box-->
-      <div style="height:100px"></div>
+      <div></div>
     </div> <!--form-->
     </div> <!--END: form-->
 </template>
@@ -415,10 +404,9 @@
 <style scoped>
   /* box for form */
   #form {
-    width: 850px;
-    height: 850px;
+    width: 70%;
     background-color: #e1caabff;
-    display: flex;
+    display: block;
     margin-left: auto;
     margin-right: auto;
     margin-top: 1%;
@@ -428,8 +416,8 @@
 
   /* box for title */
   #title {
-    width: 600px;
-    height: 40px;
+    width: 90%;
+    height: 50px;
     background-color: #eeeeeeff;
     margin-left: auto;
     margin-right: auto;
@@ -450,12 +438,12 @@
 
   /* box for description */
   #description {
-    width: 600px;
-    height: 40px;
+    width: 80%;
+    height: 50px;
     background-color: #eeeeeeff;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 10%;
+    margin-top: 1%;
     border: 1px solid black;
   }
 
@@ -490,12 +478,11 @@
 
   /* box for due date */
   #due_date {
-    width: 100px;
-    height: 28px;
+    width: auto;
     background-color: #779fa1ff;
     float: right;
-    margin-right: 50%;
-    margin-top: 510%;
+    margin-right: 0%;
+    margin-top: 1%;
     border: 1px solid black;
   }
 
@@ -508,6 +495,7 @@
     margin-right: auto;
     margin-top: 6%;
     border: 1px solid black;
+    display: block;
   }
 
   /* box for question-box */
@@ -597,20 +585,16 @@
 
   /* box for adding-button */
   .adding_button {
-    height: 50px;
-    width: 50px;
+    height: 60px;
+    width: 100px;
     background-color: #bbb;
     border-radius: 40%;
+    border: none;
     display: inline-block;
-    position: relative;
-    right: 100px;
-    top: 20px;
-    border: 1px solid black;
-    display: flex;
+    margin-top: 5%;
     /* or inline-flex */
-    justify-content: center;
     color: #eeeeeeff;
-    font-size: 40px;
+    font-size: 50px;
   }
 
   /* add hovering color to adding-button */
