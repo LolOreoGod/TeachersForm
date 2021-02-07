@@ -1,15 +1,8 @@
 <template>
-  <div class="x-button">
-    <a href="dashboard.html">X</a>
-
-    <div id="due_date">
-      Due Date
-      <br><input type="datetime-local" v-model="dueDate" style="margin-top: 2px; margin-bottom: 2px;"/>
-    </div>
-
-  </div>
-  <div id="form-container" style="height: auto">
-    <div id="form" style="height: auto">
+  <!-- <div class="x-button">
+   <a href="dashboard.html">X</a> -->
+  <div id="form-container">
+    <div id="form">
       <div id="title">
         <input
           type="text"
@@ -18,6 +11,7 @@
           v-model="title"
         />
       </div>
+      <br>
     <div id="description">
       <input
         type="text"
@@ -25,11 +19,15 @@
         placeholder="Form Description"
         v-model="desc"
       />
+    <div id="due_date">
+      Due Date
+      <br><input type="datetime-local" v-model="dueDate" />
     </div>
+    </div>
+    <br>
     <div
           id="questions"
           bind:key="{index}"
-          style="height: auto;"
           v-for="(questions, index) in questionBoxes"
           :key= "questions"
         >
@@ -52,7 +50,6 @@
             id="choose-question-type"
             class="form-control"
             v-model="questions.type"
-            style="font-size: 10px;"
           >
             <option> short answer </option>
             <option> long answer </option>
@@ -110,7 +107,6 @@
           <div
             id="longAnswer"
             class="form-control"
-            style="height: 95px;"
             :key="laindex"
             v-for="(longAnswer, laindex) in questionBoxes[index].longAnswers"
           >
@@ -118,7 +114,6 @@
               id="long-answer-textarea"
               class="form-control"
               placeholder="long answer text"
-              style="font-family: Arial, Helvetica, sans-serif;"
               v-model="longAnswer.answer"
             ></textarea>
           </div>
@@ -133,7 +128,6 @@
             id="mcquestions"
             class="mcquestions"
             name="mcquestions"
-            style="margin-top: 7px;"
             :key="mcindex"
             v-for="(mcquestions, mcindex) in questionBoxes[index].multipleChoiceOptions"
           >
@@ -149,13 +143,11 @@
               id="radioOption"
               name="radioOption"
               value=""
-              style="float: left;"
             />
             <input
               type="text"
               id="radioOptionText"
               name="radioOptionText"
-              style="float: left;"
               placeholder="option"
               v-model="mcquestions.moption"
             /><br />
@@ -175,7 +167,6 @@
             id="mcquestions"
             class="mcquestions"
             name="mcquestions"
-            style="margin-top: 7px;"
             :key="mcindex"
             v-for="(mcquestions, mcindex) in questionBoxes[index].checkboxOptions"
           >
@@ -191,13 +182,11 @@
               id="radioOption"
               name="radioOption"
               value=""
-              style="float: left;"
             />
             <input
               type="text"
               id="radioOptionText"
               name="radioOptionText"
-              style="float: left;"
               placeholder="option"
               v-model="mcquestions.coption"
             /><br />
@@ -213,7 +202,6 @@
     </div> <!--END: question boxes stack-->
       <!--button to add more questions-->
       <button
-        id="adding_button"
         class="adding_button"
         @click="addNewQuestion"
       >
@@ -227,7 +215,7 @@
         :key="index"
         v-for="(topicChoiceBox, index) in choiceBoxes"
         >
-        <p style="margin-left: 10px; margin-top: 10px; margin-bottom: 0px"> Set your choice questions here </p>
+        <p> Set your choice questions here </p>
 
         <!--topic label-->
         <br><input type="text" id="topic-label" class="topic-label" placeholder="Label (e.g. POAS)" v-model="topicChoiceBox.label"/>
@@ -242,7 +230,6 @@
           <button
             id="deleting_mc_button"
             class="deleting_mc_button"
-            style="margin-left: 2px"
             @click="deleteChoiceQuestionSet(index, questionIndex)"
           >
             -
@@ -250,8 +237,7 @@
 
           <!--dropdown base-->
           <div
-          class="question-box choices"
-          style="-webkit-text-fill-color: #779fa1; height: 32px; width: 80px"
+          class="question-box-choices"
           >
             <!--dropdown to select short or long answer to question (for each choice question)-->
             <select
@@ -259,7 +245,6 @@
               class="form-control"
               v-model="choiceQuestions.type"
               value="choiceQuestions.type"
-              style="font-size: 10px;"
             >
               <option> short </option>
               <option> long </option>
@@ -280,17 +265,15 @@
         <button
             id="adding_mc_button"
             class="adding_mc_button"
-            style="background-color: transparent; margin-left: 0.5%; margin-top: 1%; margin-bottom: 1%"
             @click="addNewChoiceQuestionSet(index)"
           >
             add question
         </button>
       </div> <!--END: topic choice box-->
-      <div style="height:100px"></div>
+      <div></div>
     </div> <!--form-->
     </div> <!--END: form-->
 </template>
-
 
 <script>
     function getISOStringWithoutSecsAndMillisecs2(date) {
@@ -381,21 +364,17 @@
               moption: ""
             });
           },
-
           deleteMultipleChoiceOption(index, mcindex) {
             this.questionBoxes[index].multipleChoiceOptions.splice(mcindex, 1);
           },
-
           addNewCheckboxOption(index) {
             this.questionBoxes[index].checkboxOptions.push({
               coption: ""
             });
           },
-
           deleteCheckboxOption(index, mcindex) {
             this.questionBoxes[index].checkboxOptions.splice(mcindex, 1);
           },
-
           addNewChoiceQuestionSet(index) {
             this.choiceBoxes[index].choiceQuestions.push({
               type: "short",
@@ -403,7 +382,6 @@
               answer: ""
             });
           },
-
           deleteChoiceQuestionSet(index, questionIndex) {
             this.choiceBoxes[index].choiceQuestions.splice(questionIndex, 1);
           }
@@ -415,28 +393,25 @@
 <style scoped>
   /* box for form */
   #form {
-    width: 850px;
-    height: 850px;
+    width: 70%;
     background-color: #e1caabff;
-    display: flex;
+    display: block;
     margin-left: auto;
     margin-right: auto;
     margin-top: 1%;
     margin-bottom: 1%;
     border: 1px solid black;
   }
-
   /* box for title */
   #title {
-    width: 600px;
-    height: 40px;
+    width: 90%;
+    height: 50px;
     background-color: #eeeeeeff;
     margin-left: auto;
     margin-right: auto;
     margin-top: 2%;
     border: 1px solid black;
   }
-
   /* Text box for title */
   .title-text {
     width: 100%;
@@ -445,22 +420,18 @@
     border-radius: 4px;
     height: 100%;
     font-size: 100%;
-
   }
-
   /* box for description */
   #description {
-    width: 600px;
-    height: 40px;
+    width: 80%;
+    height: 50px;
     background-color: #eeeeeeff;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 10%;
+    margin-top: 1%;
     border: 1px solid black;
   }
-
   /* Text box for descrption */
-
   .desc-text {
       width: 100%;
       border: none;
@@ -468,7 +439,6 @@
       border-radius: 4px;
       height: 100%;
       font-size: 100%;
-
   }
   /* box for x-button */
   .x-button {
@@ -478,7 +448,6 @@
     float: right;
     border: 1px solid white;
   }
-
   /* letter in the x-button */
   .x-button a {
     float: none;
@@ -487,18 +456,15 @@
     display: block;
     text-align: center;
   }
-
   /* box for due date */
   #due_date {
-    width: 100px;
-    height: 28px;
+    width: auto;
     background-color: #779fa1ff;
     float: right;
-    margin-right: 50%;
-    margin-top: 510%;
+    margin-right: 0%;
+    margin-top: 1%;
     border: 1px solid black;
   }
-
   /* box for question */
   #questions {
     width: 600px;
@@ -508,8 +474,8 @@
     margin-right: auto;
     margin-top: 6%;
     border: 1px solid black;
+    display: block;
   }
-
   /* box for question-box */
   .question-box {
     width: 475px;
@@ -521,9 +487,7 @@
     display: inline-block;
     border: 1px solid black;
   }
-
   /* Question input */
-
 .form-control {
     width: 100%;
     border: none;
@@ -531,9 +495,7 @@
     border-radius: 4px;
     height: 100%;
     font-size: 100%;
-
   }
-
   /* box for choices */
   .choices {
     width: 100px;
@@ -543,7 +505,6 @@
     margin-right: 1%;
     border: 1px solid black;
   }
-
   /* box for answer */
   #answer {
     width: 520px;
@@ -553,7 +514,6 @@
     margin-bottom: 1%;
     border: 1px solid black;
   }
-
   /* box for requirement */
   .required {
     width: 20px;
@@ -565,12 +525,10 @@
     margin-bottom: 1%;
     margin-right: 1%;
   }
-
   /* Add a purple background color to required button on hover */
   .required:hover {
     background-color: #564154ff;
   }
-
   /* box for trashcan icon */
   .trash_can {
     width: 20px;
@@ -583,38 +541,109 @@
     margin-right: 1%;
     text-align: center;
   }
-
   /* centering trash can icon */
   .trash_symbol {
     position: center;
     margin-top: 10%;
   }
-
   /* add hovering color for trash-box */
   .trash_can:hover {
     background-color: #999999ff;
   }
-
   /* box for adding-button */
   .adding_button {
-    height: 50px;
-    width: 50px;
+    height: 60px;
+    width: 100px;
     background-color: #bbb;
     border-radius: 40%;
+    border: none;
     display: inline-block;
-    position: relative;
-    right: 100px;
-    top: 20px;
-    border: 1px solid black;
-    display: flex;
+    margin-top: 5%;
     /* or inline-flex */
-    justify-content: center;
     color: #eeeeeeff;
-    font-size: 40px;
+    font-size: 50px;
   }
-
   /* add hovering color to adding-button */
   .adding_button:hover {
     background-color: #d0c4b4ff;
+  }
+
+  /* topic choice box */
+  #topicChoiceBox {
+    width: 600px;
+    height: 250px;
+    background-color: #eeeeeeff;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 6%;
+    border: 1px solid black;
+    display: block;
+  }
+  
+  /* label of choice box */
+  .topic-label {
+  width: 200px;
+  height: 30px;
+  float: left;
+  margin-left: 1%;
+  margin-bottom: 10px;
+  float: bottom;
+  border: 1px solid black;
+  }
+  /*question and answer text inputs in choice question box*/
+  .topic-choice-text {
+  width: 450px;
+  height: 30px;
+  margin-left: 1%;
+  margin-right: auto;
+  margin-top: 3%;
+  float: left;
+  border: 1px solid black;
+  }
+  
+  .topic-choice-textarea {
+  width: 450px;
+  height: 50px;
+  margin-left: 1%;
+  margin-right: auto;
+  margin-top: 1%;
+  float: center;
+  border: 1px solid black;
+  font-family: Arial, Helvetica, sans-serif;
+  }
+ 
+ #mcquestions {
+  margin-top: 5px;
+  }
+
+  /* adding multiple choice/checkbox button */
+  .adding_mc_button {
+  background-color: white;
+  border: none;
+  color: grey;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  }
+
+  .adding_mc_button:hover {
+  color: #779fa1ff;
+  }
+
+  .question-box-choices {
+  -webkit-text-fill-color: #779fa1; 
+  height: 32px; 
+  width: 80px;
+  float: right;
+  background-color: #ede1d1ff;
+  margin-right: 1%;
+  margin-top: 3%;
+  border: 1px solid black;
+  }
+
+  .deleting_mc_button {
+    float: left;
+    margin-top: 3%;
+    margin-left: 1%;
   }
 </style>
