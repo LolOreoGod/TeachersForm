@@ -4,23 +4,23 @@
   <div id="form">
     <div id="title">
       <input
+        disabled
         type="text"
         class="title-text"
         placeholder="Enter Title Here"
-        v-model="title"
       />
     </div>
     <br />
     <div id="description">
       <input
+        disabled
         type="text"
         class="desc-text"
         placeholder="Form Description"
-        v-model="desc"
       />
       <div id="due_date">
         Due Date
-        <br /><input type="datetime-local" v-model="dueDate" />
+        <br /><input disabled type="datetime-local" />
       </div>
     </div>
     <br />
@@ -200,8 +200,13 @@
     <!-- <button class="adding_button" @click="addNewQuestion">+</button> -->
 
     <!--topic choice box-->
-    <div id="topicChoiceBox" class="questions">
-      <p>Set your choice questions here</p>
+    <div
+      id="topicChoiceBox"
+      class="questions"
+      :key="index"
+      v-for="(topicChoiceBox, index) in choiceBoxes"
+    >
+      <p>Set your options here</p>
 
       <!--topic label-->
       <!--
@@ -215,28 +220,14 @@
 
       <!--all choice sets (question + answer)-->
       <div
-        id="questionSet"
+        id="choiceQuestions"
         :key="questionIndex"
         style="height: 150px"
-        v-for="(questionSet, questionIndex) in choiceQuestions"
+        v-for="(choiceQuestions, questionIndex) in choiceBoxes[index]
+          .choiceQuestions"
       >
         <!--question-->
-        <input
-          type="text"
-          id="choice_question"
-          class="topic-choice-text"
-          placeholder="question (e.g. sentence of significance)"
-          v-model="questionSet.question"
-        />
-
-        <!--delete choice set button-->
-        <button
-          id="deleting_mc_button"
-          class="deleting_mc_button"
-          @click="deleteChoiceQuestionSet(questionIndex)"
-        >
-          -
-        </button>
+        <p style="float: left; margin-left: 1%">question(from database)</p>
 
         <!--dropdown base-->
         <div class="question-box-choices">
@@ -244,8 +235,8 @@
           <select
             id="choose-question-type"
             class="form-control"
-            v-model="questionSet.type"
-            value="questionSet.type"
+            v-model="choiceQuestions.type"
+            value="choiceQuestions.type"
           >
             <option>short</option>
             <!-- <option>long</option> -->
@@ -257,30 +248,22 @@
         <input
           type="text"
           id="choice_question_answer"
-          v-if="questionSet.type == 'short'"
+          v-if="choiceQuestions.type == 'short'"
           class="topic-choice-text"
           placeholder="answer area"
+          v-model="choiceQuestions.answer"
         />
 
         <!--long answer-->
         <textarea
           id="choice_question_answer"
           class="topic-choice-textarea"
-          v-if="questionSet.type == 'long'"
+          v-if="choiceQuestions.type == 'long'"
           placeholder="answer area"
-          v-model="questionSet.answer"
+          v-model="choiceQuestions.answer"
         ></textarea>
       </div>
       <!--END: choice set (question+answer) stack-->
-
-      <!--add choice question set button-->
-      <button
-        id="adding_mc_button"
-        class="adding_mc_button"
-        @click="addNewChoiceQuestionSet()"
-      >
-        add question
-      </button>
     </div>
     <!--END: topic choice box-->
   </div>
@@ -294,108 +277,32 @@ function getISOStringWithoutSecsAndMillisecs2(date) {
 }
 export default {
   name: "TeachersForm",
+  props: {
+    msg: String,
+  },
   el: "#form",
   data() {
     return {
       title: "",
       desc: "",
       dueDate: getISOStringWithoutSecsAndMillisecs2(new Date()),
-      choiceQuestions: [
+      optionSets: [
         {
-          type: "short",
-          question: "sdjfko;ajfdk;af",
+          answer1: "",
+          answer2: "",
+          answer3: "",
         },
       ],
-      /*questionBoxes: [
-        {
-          
-          question: "",
-          title: "",
-          required: false,
-          type: "short answer",
-          // short Answer is default question
-          shortAnswers: [
-            {
-              answer: "",
-            },
-          ],
-          longAnswers: [
-            {
-              answer: "",
-            },
-          ],
-          multipleChoiceOptions: [
-            {
-              moption: "",
-            },
-          ],
-          checkboxOptions: [
-            {
-              coption: "",
-            },
-          ], 
-        }, 
-      ],*/
     };
   },
   methods: {
-    addNewQuestion() {
-      this.questionBoxes.push({
-        question: "",
-        type: "short answer",
-        required: true,
-        shortAnswers: [
-          {
-            answer: "",
-          },
-        ],
-        longAnswers: [
-          {
-            answer: "",
-          },
-        ],
-        multipleChoiceOptions: [
-          {
-            moption: "",
-          },
-        ],
-        checkboxOptions: [
-          {
-            coption: "",
-          },
-        ],
+    addNewOptionSet(index) {
+      this.optionSets.push({
+        answer1: "",
       });
     },
-    deleteQuestion(index) {
-      this.questionBoxes.splice(index, 1);
-    },
-    addNewMultipleChoiceOption(index) {
-      this.questionBoxes[index].multipleChoiceOptions.push({
-        moption: "",
-      });
-    },
-    deleteMultipleChoiceOption(index, mcindex) {
-      this.questionBoxes[index].multipleChoiceOptions.splice(mcindex, 1);
-    },
-    addNewCheckboxOption(index) {
-      this.questionBoxes[index].checkboxOptions.push({
-        coption: "",
-      });
-    },
-    deleteCheckboxOption(index, mcindex) {
-      this.questionBoxes[index].checkboxOptions.splice(mcindex, 1);
-    },
-    addNewChoiceQuestionSet() {
-      this.choiceQuestions.push({
-        type: "short",
-        question: "",
-        answer: "",
-      });
-    },
-    deleteChoiceQuestionSet(questionIndex) {
-      if (this.choiceQuestions.length !== 1) {
-        this.choiceQuestions.splice(questionIndex, 1);
-      }
+    deleteChoiceQuestionSet(index, questionIndex) {
+      this.choiceBoxes[index].choiceQuestions.splice(questionIndex, 1);
     },
   }, // methods end
 }; // app end
@@ -604,22 +511,21 @@ export default {
 }
 /*question and answer text inputs in choice question box*/
 .topic-choice-text {
-  width: 450px;
+  width: 500px;
   height: 30px;
   margin-left: 1%;
   margin-right: auto;
-  margin-top: 3%;
+  margin-top: 0%;
   float: left;
-  border: 1px solid black;
 }
 
 .topic-choice-textarea {
-  width: 450px;
+  width: 5000px;
   height: 50px;
   margin-left: 1%;
   margin-right: auto;
   margin-top: 1%;
-  float: center;
+  float: left;
   border: 1px solid black;
   font-family: Arial, Helvetica, sans-serif;
 }
