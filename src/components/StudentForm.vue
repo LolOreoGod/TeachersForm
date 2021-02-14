@@ -2,270 +2,55 @@
   <!-- <div class="x-button">
    <a href="dashboard.html">X</a> -->
   <div id="form">
+    <div class="x-button">
+      <a href="StudentDashboard.html">X</a>
+    </div>
     <div id="title">
-      <input
-        disabled
-        type="text"
-        class="title-text"
-        placeholder="Enter Title Here"
-      />
+      Title (from Database)
     </div>
-    <br />
+    <br/>
     <div id="description">
-      <input
-        disabled
-        type="text"
-        class="desc-text"
-        placeholder="Form Description"
-      />
-      <div id="due_date">
-        Due Date
-        <br /><input disabled type="datetime-local" />
-      </div>
+      Description (from database)
+    </div>
+    <div id="due_date">
+      Due Date (is this needed)
+      <br /><input disabled type="datetime-local" v-model="dueDate" />
     </div>
     <br />
-    <div
-      id="questions"
-      bind:key="{index}"
-      v-for="(questions, index) in questionBoxes"
-      :key="questions"
-    >
-      <!--question-->
-      <div class="question-box">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Enter Question Here"
-          v-model="questions.question"
-        />
-      </div>
-
-      <!--choose question type"-->
-      <div
-        class="question-box choices"
-        style="-webkit-text-fill-color: #779fa1"
-      >
-        <select
-          id="choose-question-type"
-          class="form-control"
-          v-model="questions.type"
-        >
-          <option>short answer</option>
-          <option>long answer</option>
-          <option>multiple choice</option>
-          <option>checkbox</option>
-        </select>
-      </div>
-
-      <!--required box-->
-      <input type="checkbox" v-model="questions.required" class="required" />
-
-      <!--trash button-->
-      <div class="trash_can">
-        <div class="trash_symbol" @click="deleteQuestion(index)">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-trash"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
-            />
-            <path
-              fill-rule="evenodd"
-              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-            />
-          </svg>
-        </div>
-      </div>
-
-      <!--short answer text-->
-      <div
-        id="answer"
-        style="height: 40px"
-        v-if="questionBoxes[index].type == 'short answer'"
-      >
-        <div
-          id="shortAnswer"
-          class="form-control"
-          :key="saindex"
-          v-for="(shortAnswer, saindex) in questionBoxes[index].shortAnswers"
-        >
-          <input
-            type="text"
-            id="short-answer-text"
-            class="form-control"
-            placeholder="short answer text"
-            style="font-family: Arial, Helvetica, sans-serif"
-            v-model="shortAnswer.answer"
-          />
-        </div>
-      </div>
-
-      <!--long answer text area-->
-      <div id="answer" v-if="questionBoxes[index].type == 'long answer'">
-        <div
-          id="longAnswer"
-          class="form-control"
-          :key="laindex"
-          v-for="(longAnswer, laindex) in questionBoxes[index].longAnswers"
-        >
-          <textarea
-            id="long-answer-textarea"
-            class="form-control"
-            placeholder="long answer text"
-            v-model="longAnswer.answer"
-          ></textarea>
-        </div>
-      </div>
-
-      <!--multiple choice answer-->
-      <div
-        id="answer"
-        v-else-if="questionBoxes[index].type == 'multiple choice'"
-      >
-        <div
-          id="mcquestions"
-          class="mcquestions"
-          name="mcquestions"
-          :key="mcindex"
-          v-for="(mcquestions, mcindex) in questionBoxes[index]
-            .multipleChoiceOptions"
-        >
-          <button
-            id="deleting_mc_button"
-            class="deleting_mc_button"
-            @click="deleteMultipleChoiceOption(index, mcindex)"
-          >
-            -
-          </button>
-          <input type="radio" id="radioOption" name="radioOption" value="" />
-          <input
-            type="text"
-            id="radioOptionText"
-            name="radioOptionText"
-            placeholder="option"
-            v-model="mcquestions.moption"
-          /><br />
-        </div>
-        <button
-          id="adding_mc_button"
-          class="adding_mc_button"
-          @click="addNewMultipleChoiceOption(index)"
-        >
-          add option
-        </button>
-      </div>
-
-      <!--checkbox answer-->
-      <div id="answer" v-else-if="questionBoxes[index].type == 'checkbox'">
-        <div
-          id="mcquestions"
-          class="mcquestions"
-          name="mcquestions"
-          :key="mcindex"
-          v-for="(mcquestions, mcindex) in questionBoxes[index].checkboxOptions"
-        >
-          <button
-            id="deleting_mc_button"
-            class="deleting_mc_button"
-            @click="deleteCheckboxOption(index, mcindex)"
-          >
-            -
-          </button>
-          <input type="checkbox" id="radioOption" name="radioOption" value="" />
-          <input
-            type="text"
-            id="radioOptionText"
-            name="radioOptionText"
-            placeholder="option"
-            v-model="mcquestions.coption"
-          /><br />
-        </div>
-        <button
-          id="adding_mc_button"
-          class="adding_mc_button"
-          @click="addNewCheckboxOption(index)"
-        >
-          add option
-        </button>
-      </div>
-    </div>
-    <!--END: question boxes stack-->
-    <!--button to add more questions-->
-
-    <!-- <button class="adding_button" @click="addNewQuestion">+</button> -->
-
+  
     <!--topic choice box-->
-    <div
-      id="topicChoiceBox"
-      class="questions"
-      :key="index"
-      v-for="(topicChoiceBox, index) in choiceBoxes"
-    >
-      <p>Set your options here</p>
-
-      <!--topic label-->
-      <!--
-        <br /><input
-          type="text"
-          id="topic-label"
-          class="topic-label"
-          placeholder="Label (e.g. POAS)"
-          v-model="topicChoiceBox.label"
-        /> -->
+    <div id="topicChoiceBox" class="questions">
+      <p>POAS Questions (or whatever teacher decides)</p>
 
       <!--all choice sets (question + answer)-->
       <div
-        id="choiceQuestions"
+        id="questionSet"
         :key="questionIndex"
         style="height: 150px"
-        v-for="(choiceQuestions, questionIndex) in choiceBoxes[index]
-          .choiceQuestions"
+        v-for="(questionSet, questionIndex) in choiceQuestions"
       >
         <!--question-->
-        <p style="float: left; margin-left: 1%">question(from database)</p>
-
-        <!--dropdown base-->
-        <div class="question-box-choices">
-          <!--dropdown to select short or long answer to question (for each choice question)-->
-          <select
-            id="choose-question-type"
-            class="form-control"
-            v-model="choiceQuestions.type"
-            value="choiceQuestions.type"
-          >
-            <option>short</option>
-            <!-- <option>long</option> -->
-          </select>
+        <div
+          type="text"
+          id="choice_question"
+          class="topic-choice-text">
+          Question (from database)
         </div>
-        <!--question answer-->
 
-        <!--short answer-->
+        <!--Question Answer-->
         <input
           type="text"
           id="choice_question_answer"
-          v-if="choiceQuestions.type == 'short'"
-          class="topic-choice-text"
+          v-if="questionSet.type == 'short'"
+          class="topic-choice-answer"
           placeholder="answer area"
-          v-model="choiceQuestions.answer"
         />
 
-        <!--long answer-->
-        <textarea
-          id="choice_question_answer"
-          class="topic-choice-textarea"
-          v-if="choiceQuestions.type == 'long'"
-          placeholder="answer area"
-          v-model="choiceQuestions.answer"
-        ></textarea>
       </div>
       <!--END: choice set (question+answer) stack-->
     </div>
     <!--END: topic choice box-->
+    <div class="submit-button">Submit</div>
   </div>
   <!--form-->
 </template>
@@ -277,32 +62,108 @@ function getISOStringWithoutSecsAndMillisecs2(date) {
 }
 export default {
   name: "TeachersForm",
-  props: {
-    msg: String,
-  },
   el: "#form",
   data() {
     return {
       title: "",
       desc: "",
       dueDate: getISOStringWithoutSecsAndMillisecs2(new Date()),
-      optionSets: [
+      choiceQuestions: [
         {
-          answer1: "",
-          answer2: "",
-          answer3: "",
+          type: "short",
+          question: "sdjfko;ajfdk;af",
         },
       ],
+      /*questionBoxes: [
+        {
+          
+          question: "",
+          title: "",
+          required: false,
+          type: "short answer",
+          // short Answer is default question
+          shortAnswers: [
+            {
+              answer: "",
+            },
+          ],
+          longAnswers: [
+            {
+              answer: "",
+            },
+          ],
+          multipleChoiceOptions: [
+            {
+              moption: "",
+            },
+          ],
+          checkboxOptions: [
+            {
+              coption: "",
+            },
+          ], 
+        }, 
+      ],*/
     };
   },
   methods: {
-    addNewOptionSet(index) {
-      this.optionSets.push({
-        answer1: "",
+    addNewQuestion() {
+      this.questionBoxes.push({
+        question: "",
+        type: "short answer",
+        required: true,
+        shortAnswers: [
+          {
+            answer: "",
+          },
+        ],
+        longAnswers: [
+          {
+            answer: "",
+          },
+        ],
+        multipleChoiceOptions: [
+          {
+            moption: "",
+          },
+        ],
+        checkboxOptions: [
+          {
+            coption: "",
+          },
+        ],
       });
     },
-    deleteChoiceQuestionSet(index, questionIndex) {
-      this.choiceBoxes[index].choiceQuestions.splice(questionIndex, 1);
+    deleteQuestion(index) {
+      this.questionBoxes.splice(index, 1);
+    },
+    addNewMultipleChoiceOption(index) {
+      this.questionBoxes[index].multipleChoiceOptions.push({
+        moption: "",
+      });
+    },
+    deleteMultipleChoiceOption(index, mcindex) {
+      this.questionBoxes[index].multipleChoiceOptions.splice(mcindex, 1);
+    },
+    addNewCheckboxOption(index) {
+      this.questionBoxes[index].checkboxOptions.push({
+        coption: "",
+      });
+    },
+    deleteCheckboxOption(index, mcindex) {
+      this.questionBoxes[index].checkboxOptions.splice(mcindex, 1);
+    },
+    addNewChoiceQuestionSet() {
+      this.choiceQuestions.push({
+        type: "short",
+        question: "",
+        answer: "",
+      });
+    },
+    deleteChoiceQuestionSet(questionIndex) {
+      if (this.choiceQuestions.length !== 1) {
+        this.choiceQuestions.splice(questionIndex, 1);
+      }
     },
   }, // methods end
 }; // app end
@@ -366,7 +227,10 @@ export default {
   height: 20px;
   background-color: #c95237ff;
   float: right;
-  border: 1px solid white;
+  border: 1px solid black;
+  text-decoration: none;
+  display: block;
+  color: white;
 }
 /* letter in the x-button */
 .x-button a {
@@ -381,119 +245,19 @@ export default {
   width: auto;
   background-color: #779fa1ff;
   float: right;
-  margin-right: 0%;
+  margin-right: 1%;
   margin-top: 1%;
   border: 1px solid black;
-}
-/* box for question */
-#questions {
-  width: 600px;
-  height: 200px;
-  background-color: #eeeeeeff;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 6%;
-  border: 1px solid black;
-  display: block;
-}
-/* box for question-box */
-.question-box {
-  width: 475px;
-  height: 40px;
-  background-color: #ede1d1ff;
-  margin-left: 1%;
-  margin-right: auto;
-  margin-top: 1%;
-  display: inline-block;
-  border: 1px solid black;
-}
-/* Question input */
-.form-control {
-  width: 100%;
-  border: none;
-  box-sizing: border-box;
-  border-radius: 4px;
-  height: 100%;
-  font-size: 100%;
-}
-/* box for choices */
-.choices {
-  width: 100px;
-  height: 40px;
-  background-color: #ede1d1ff;
-  float: right;
-  margin-right: 1%;
-  border: 1px solid black;
-}
-/* box for answer */
-#answer {
-  width: 520px;
-  height: 125px;
-  background-color: #eeeeeeff;
-  margin-top: 11%;
-  margin-bottom: 1%;
-  border: 1px solid black;
-}
-/* box for requirement */
-.required {
-  width: 20px;
-  height: 20px;
-  background-color: #eeeeeeff;
-  border: 1px solid black;
-  float: right;
-  margin-top: 20%;
-  margin-bottom: 1%;
-  margin-right: 1%;
-}
-/* Add a purple background color to required button on hover */
-.required:hover {
-  background-color: #564154ff;
-}
-/* box for trashcan icon */
-.trash_can {
-  width: 20px;
-  height: 20px;
-  background-color: #b7b7b7ff;
-  border: 1px solid black;
-  float: right;
-  margin-top: 20%;
-  margin-bottom: 1%;
-  margin-right: 1%;
-  text-align: center;
-}
-/* centering trash can icon */
-.trash_symbol {
-  position: center;
-  margin-top: 10%;
-}
-/* add hovering color for trash-box */
-.trash_can:hover {
-  background-color: #999999ff;
-}
-/* box for adding-button */
-.adding_button {
-  height: 60px;
-  width: 100px;
-  background-color: #bbb;
-  border-radius: 40%;
-  border: none;
-  display: inline-block;
-  margin-top: 5%;
-  /* or inline-flex */
-  color: #eeeeeeff;
-  font-size: 50px;
-}
-/* add hovering color to adding-button */
-.adding_button:hover {
-  background-color: #d0c4b4ff;
 }
 
 /* topic choice box */
 #topicChoiceBox {
   width: 600px;
+  height: auto;
   background-color: #eeeeeeff;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 1%;
   margin-top: 6%;
   border: 1px solid black;
   display: block;
@@ -511,59 +275,33 @@ export default {
 }
 /*question and answer text inputs in choice question box*/
 .topic-choice-text {
-  width: 500px;
+  width: 550px;
   height: 30px;
-  margin-left: 1%;
+  margin-left: auto;
   margin-right: auto;
-  margin-top: 0%;
-  float: left;
-}
-
-.topic-choice-textarea {
-  width: 5000px;
-  height: 50px;
-  margin-left: 1%;
-  margin-right: auto;
-  margin-top: 1%;
-  float: left;
-  border: 1px solid black;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-#mcquestions {
-  margin-top: 5px;
-}
-
-/* adding multiple choice/checkbox button */
-.adding_mc_button {
-  background-color: white;
-  border: none;
-  color: grey;
-  display: flex;
-  float: left;
-  margin-top: -5%;
-  margin-left: 1%;
-  margin-right: auto;
-}
-
-.adding_mc_button:hover {
-  color: #779fa1ff;
-}
-
-.question-box-choices {
-  -webkit-text-fill-color: #779fa1;
-  height: 32px;
-  width: 80px;
-  float: right;
-  background-color: #ede1d1ff;
-  margin-right: 1%;
   margin-top: 3%;
   border: 1px solid black;
 }
 
-.deleting_mc_button {
-  float: left;
+.topic-choice-answer {
+  width: 550px;
+  height: 80px;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 3%;
-  margin-left: 1%;
+  border: 1px solid black;
+}
+
+.submit-button {
+  height: 25px;
+  width: 100px;
+  background-color: #be4b31ff;
+  border: 1px solid black;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1%;
+  color: white;
+  display: block;
+  text-align: center;
 }
 </style>
