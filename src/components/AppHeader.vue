@@ -1,7 +1,7 @@
 <template>
         <div class="navigator">
           <div class="left-side">
-            <a href="dashboard.html">Return to Dashboard</a>
+            <a href="StudentDashboard.html">Return to Dashboard</a>
           </div>
           <div class="right-side">
             <div class="dropdown">
