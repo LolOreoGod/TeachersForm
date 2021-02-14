@@ -101,7 +101,7 @@ export default {
     };
   },
   methods: {
-    addNewOptionSet(index) {
+    addNewOptionSet() {
       this.options.push({
         answer1: "",
         answer2: "",
