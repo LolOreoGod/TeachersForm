@@ -2,19 +2,19 @@
     <div id = "app">
 
         <AppHeader />
-        <TeacherForm />
+        <StudentForm />
     </div>
 </template>
 
 <script>
 import AppHeader from './components/AppHeader'
-import TeacherForm from './components/TeacherForm'
+import StudentForm from './components/StudentForm'
 
 export default {
   name: 'App',
   components: {
     AppHeader,
-    TeacherForm
+    StudentForm
   }
 }
 </script>
